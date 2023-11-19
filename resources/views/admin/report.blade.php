@@ -38,7 +38,7 @@
 
     <div class="card">
       <div class="card-content">
-        <div class="number">42</div>
+        <div class="number">{{$user}}</div>
         <div class="card-name">Usuários cadastrados</div>
       </div>
       <div class="icon-box">
@@ -49,8 +49,8 @@
 
     <div class="card">
       <div class="card-content">
-        <div class="number">42</div>
-        <div class="card-name">Vendas registradas</div>
+        <div class="number">{{ $stock }}</div>
+        <div class="card-name">Registros de Estoque</div>
       </div>
       <div class="icon-box">
         <i class="bi bi-cart-check"></i>
@@ -73,40 +73,41 @@
     <section class="graficos col s12 m6" >            
       <div class="grafico card z-depth-4">
           <h5 class="center"> Aquisição de usuários</h5>
-              <canvas id="myChart" width="400" height="150"></canvas>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+            <canvas id="myChart" width="400" height="150"></canvas>
+            <h5>{{$products}}</h5>
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
 
-            const ctx = document.getElementById('myChart');
-            const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                }
-            });
-        }, true);
-    </script>
+              const ctx = document.getElementById('myChart');
+              const myChart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                      datasets: [{
+                          label: 'n° of Votes',
+                          data: [12, 19, 3, 5, 2, 3],
+                          backgroundColor: [
+                              'rgba(255, 99, 132, 0.2)',
+                              'rgba(54, 162, 235, 0.2)',
+                              'rgba(255, 206, 86, 0.2)',
+                              'rgba(75, 192, 192, 0.2)',
+                              'rgba(153, 102, 255, 0.2)',
+                              'rgba(255, 159, 64, 0.2)'
+                          ],
+                          borderColor: [
+                              'rgba(255, 99, 132, 1)',
+                              'rgba(54, 162, 235, 1)',
+                              'rgba(255, 206, 86, 1)',
+                              'rgba(75, 192, 192, 1)',
+                              'rgba(153, 102, 255, 1)',
+                              'rgba(255, 159, 64, 1)'
+                          ],
+                          borderWidth: 1
+                      }]
+              }
+              });
+          }, true);
+            </script>
       </div>           
     </section> 
     

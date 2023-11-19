@@ -18,9 +18,6 @@ use App\Http\Controllers\Admin\StockController;
 |
 */
 
-Route::get("/graph", function () {
-    return view("graph");
-});
 
 Route::get('/', function () {
     return view('welcome');
