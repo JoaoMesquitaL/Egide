@@ -72,18 +72,23 @@
   <div class="row container ">
     <section class="graficos col s12 m6" >            
       <div class="grafico card z-depth-4">
-          <h5 class="center"> Aquisição de usuários</h5>
+          <h5 class="center"> Relação de produtos</h5>
             <canvas id="myChart" width="400" height="150"></canvas>
             <script>
+              const prodNome = {!! json_encode($prodName) !!};
+              console.log(prodNome);
+              const qtdStockP = {!! json_encode($qtdStockP) !!};
+              console.log(qtdStockP);
+
               document.addEventListener('DOMContentLoaded', function () {
               const ctx = document.getElementById('myChart');
               const myChart = new Chart(ctx, {
                   type: 'bar',
                   data: {
-                      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                      labels: prodNome,//['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                       datasets: [{
-                          label: 'n° of Votes',
-                          data: [12, 19, 3, 5, 2, 3],
+                          label: 'Quantidade em estoque!',
+                          data: qtdStockP, //[12, 19, 3, 5, 2, 3],
                           backgroundColor: [
                               'rgba(255, 99, 132, 0.2)',
                               'rgba(54, 162, 235, 0.2)',
@@ -172,14 +177,12 @@
 
 
   </body>
-
-  </html>
+  
+</html>
 
   @endsection
 
   @push('graph')
-  <script>
-
-  </script>
+  
 
   @endpush
