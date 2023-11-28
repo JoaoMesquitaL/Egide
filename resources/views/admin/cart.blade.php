@@ -5,27 +5,39 @@
 
 <!-- BREADSCRUMBS -->
 
-@php
-// SDK do MercadoPago
-require base_path('vendor/autoload.php');
-#use MercadoPago\MercadoPagoConfig;
-//Adicione as credenciais
-MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
+<?php
 
-$preference = new MercadoPago\Preference();
+use MercadoPago\Item;
+use MercadoPago\Preference;
+use MercadoPago\SDK;
 
-$item = new MercadoPago\Item();
+    SDK::setAccessToken(config('services.mercadopago.token'));
 
-$item->title = "Cidade de bronze";
-$item->quantity = 1;
-$item->unit_price = 34.00;
-$item->currency_id = "BRL";
+    $cart = \Cart::getContent();
 
-$preference->items = array($item);
-$preference->save();
+    $preference = new Preference();
+
+    $itens = [];
+
+    foreach ($cart as $produtos) {
+        # code...
+        $item = new Item();
+        $item->title = $produtos->name;
+        $item->quantity = $produtos->quantity;
+        $item->unit_price = $produtos->price;
+        $item->currency_id = "BRL";
+
+        $itens[] = $item;
+
+    }
 
 
-@endphp
+    $preference->items = $itens;
+    $preference->save();
+
+
+?>
+
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
@@ -82,65 +94,72 @@ $preference->save();
             </tr>
         </thead>
         <tbody>
+        
             @foreach ($items as $item)
-            <tr>
-                <th scope="row">{{ $item->id }}</th>
-                <td>{{ $item->name }}</td>
-                <td>R$ {{ number_format($item->price, 2, ',' , '.') }}</td>
+                
+                    <tr>
+                        <th scope="row">{{ $item->id }}</th>
+                        <td>{{ $item->name }}</td>
+                        <td>R$ {{ number_format($item->price, 2, ',' , '.') }}</td>
 
-                <td>R$ {{ number_format(\Cart::getSubtotal(), 2, ',', '.') }}</td>
+                        <td>R$ {{ number_format(\Cart::getSubtotal(), 2, ',', '.') }}</td>
+                        
 
-                {{-- BTN UPDATE --}}
-                <form action="{{ route('updatecart') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="id" value="{{ $item->id }}">
-                    <td><input style="width: 50px" type="number" name="quantity" min="1" value="{{ $item->quantity }}">
-                    </td>
-                    <td>
+                        {{-- BTN UPDATE --}}
+                            <form action="{{ route('updatecart') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                <td><input style="width: 50px" type="number" name="quantity" min="1" value="{{ $item->quantity }}">
+                                </td>
+                                <td>
 
-                        <button class="btn btn-bd-primary">
-                            <i class="bi bi-arrow-clockwise"></i>
-                        </button>
+                                    <button class="btn btn-bd-primary">
+                                        <i class="bi bi-arrow-clockwise"></i>
+                                    </button>
 
-                </form>
+                                </form>
 
-                {{-- BTN DELETE --}}
-                <form action="{{ route('deletecart') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="id" value="{{ $item->id }}">
+                                {{-- BTN DELETE --}}
+                                <form action="{{ route('deletecart') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $item->id }}">
 
-                    <button class="btn btn-bd-primary">
-                        <i class="bi bi-trash3"></i>
-                    </button>
+                                    <button class="btn btn-bd-primary">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
 
-                </form>
+                                </form>
 
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-    <h5>Valor total: R$ {{ number_format(\Cart::getTotal(), 2, ',', '.') }}</h5>
-    @endif
+        <h5>Valor total: R$ {{ number_format(\Cart::getTotal(), 2, ',', '.') }}</h5>
+        @endif
 
     <br>
 
-    <div class="container">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a href="{{ route('displayproducts') }}" class="btn btn-bd-primary" type="button"><i
-                    class="bi bi-arrow-left"></i> Continuar
-                comprando</a>
-            <a href="{{ route('clearcart') }}" class="btn btn-danger" type="button">Limpar carrinho <i
-                    class="bi bi-x-lg"></i></a>
-        </div>
-        <br>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="cho" style="border:none;" type="button"> </button>
-        </div>
+                <div class="container">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{{ route('displayproducts') }}" class="btn btn-bd-primary" type="button"><i
+                            class="bi bi-arrow-left"></i> Continuar
+                        comprando</a>
+                        <a href="{{ route('clearcart') }}" class="btn btn-danger" type="button">Limpar carrinho <i
+                            class="bi bi-x-lg"></i></a>
+                    </div>
+                <br>
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="" style="border:none;" type="submit"> 
+
+                    <a href="#" class="venda"></a>
+                </button>
+            </div>
 
     </div>
-
+    
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 
     <script>
@@ -152,13 +171,17 @@ $preference->save();
                 id: '{{ $preference->id }}'
             },
             render: {
-                container: '.cho',
+                container: '.venda',
                 label: 'Finalizar pedido',
             }
         });
 
 
     </script>
+
+
+
+    
 
 
 

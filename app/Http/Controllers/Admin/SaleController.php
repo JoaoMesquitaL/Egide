@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Product;
 use App\Models\Image;
+use App\Models\User;
 
 class SaleController extends Controller
 {
@@ -25,4 +26,5 @@ class SaleController extends Controller
         $product = Product::find($id);
         return view('admin.viewproduct', compact('product'));
     }
+    
 }

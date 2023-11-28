@@ -28,9 +28,6 @@
       <li class="nav-item active">
         <a class="nav-link" href="/"> Home Page</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/funcionalidade">Funcionalidades</a>
-      </li>
     </ul>
 
   </div>
@@ -66,7 +63,7 @@
             <div class="col border border-dark">
             
                 <div class="text-center mt-3 contact100-pic js-tilt" data-tilt>
-					<img src="img/egide_logo.jpg" alt="IMG">
+					<h1><a href="/">Égide</a></h1>
 				</div>
 
 				<form action="{{ route('send.email') }}" class="contact100-form validate-form" method="post">

@@ -1,3 +1,5 @@
+
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -26,11 +28,6 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'role:user'])->name('dashboard');
-
-Route::get('/funcionalidade', function(){
-    return view('funcionalidade');
-});
-
 
 Route::get('/email', [App\Http\Controllers\EmailController::class, 'create']);
 Route::post('/email', [App\Http\Controllers\EmailController::class, 'sendEmail'])->name('send.email');
@@ -84,6 +81,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
     Route::controller(StockController::class)->group(function(){
         Route::get('/admin/stock-products', 'StockProducts')->name('stockproducts');
+        Route::get('/admin/configurations', 'ConfigurationsProfile')->name('configurations');
+        Route::post('/admin/updatequantity/{id}', 'UpdateQuantity')->name('updatequantity');
+        Route::get('/admin/readnotification', 'markAsReadNotification')->name('readnotification');
+        Route::post('/admin/notificationMinimumStock/{id}', 'notificationMinimumStock')->name('notificationMinimumStock');
 
     });
 
@@ -91,3 +92,4 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 });
 
 require __DIR__.'/auth.php';
+

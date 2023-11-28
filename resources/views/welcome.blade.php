@@ -12,7 +12,7 @@
         <!-- Styles -->
         <style>
             html, body {
-                background: linear-gradient(6deg, #000000 -95%, #6f42c1 100%);
+                background: linear-gradient(6deg, #5D3FD3 -95%, #000 100%);
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
@@ -99,8 +99,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ url('/funcionalidade') }}">Funcionalidades e Objetivo</a>
-                    <a href="{{ url('/email') }}">Entre em contato</a>
+                    <a href="{{ url('/email') }}">-> Entre em contato</a>
                 </div>
             </div>
         </div>

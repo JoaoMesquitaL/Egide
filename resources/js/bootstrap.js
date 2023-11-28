@@ -1,8 +1,4 @@
 window._ = require('lodash');
-window.$ = require('jquery'); //Importar Jquery para disponibiliza-lo no objeto window do Laravel
-
-import Chart from 'chart.js';
-window.Chart = Chart; //importando a opção de Gráficos do Chart JS para poder usar com blade
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support

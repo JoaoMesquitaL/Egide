@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
+use App\Models\User;
+use App\Models\Role;
 
 class NewPasswordController extends Controller
 {
@@ -62,4 +64,9 @@ class NewPasswordController extends Controller
                     : back()->withInput($request->only('email'))
                             ->withErrors(['email' => __($status)]);
     }
+
+
+   #public function UserEdit() {
+   #     return view('admin.useredit');
+    #}
 }

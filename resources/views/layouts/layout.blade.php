@@ -29,7 +29,9 @@
     <input type="checkbox" id="menu-toggle">
     <div class="sidebar">
         <div class="side-header">
-            <h3 href="/">E<span>gide</span></h3>
+            <a href="/">
+                <h3>É<span>gide</span></h3>
+            </a>
         </div>
 
         <div class="side-content">
@@ -42,24 +44,57 @@
                             <small>Vendas</small>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('stockproducts') }}">
-                            <span class="bi bi-box-seam"></span>
-                            <small>Estoque</small>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('indexproducts') }}" class="active">
-                            <span class="bi bi-basket"></span>
-                            <small>Produtos</small>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('report') }}">
-                            <span class="bi bi-graph-up-arrow"></span>
-                            <small>Relatórios</small>
-                        </a>
-                    </li>
+                    @if (auth()->user()->hasRole('admin') == 'admin')
+                        <li>
+                            <a href="{{ route('stockproducts') }}">
+                                <span class="bi bi-box-seam"></span>
+                                <small>Estoque</small>
+                            </a>
+                        </li>
+                    @else
+                        <li hidden>
+                            <a href="{{ route('stockproducts') }}">
+                                <span class="bi bi-box-seam"></span>
+                                <small>Estoque</small>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if (auth()->user()->hasRole('admin') == 'admin')
+
+                        <li>
+                            <a href="{{ route('indexproducts') }}" class="active">
+                                <span class="bi bi-basket"></span>
+                                <small>Produtos</small>
+                            </a>
+                        </li>
+                    @else
+                        <li hidden>
+                            <a href="{{ route('indexproducts') }}" class="active">
+                                <span class="bi bi-basket"></span>
+                                <small>Produtos</small>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if (auth()->user()->hasRole('admin') == 'admin')
+                        <li>
+                            <a href="{{ route('report') }}">
+                                <span class="bi bi-graph-up-arrow"></span>
+                                <small>Relatórios</small>
+                            </a>
+                        </li>
+                    
+                    @else
+                        <li hidden>
+                            <a href="{{ route('report') }}">
+                                <span class="bi bi-graph-up-arrow"></span>
+                                <small>Relatórios</small>
+                            </a>
+                        </li>
+        
+                    @endif
+                    
 
 
                 </ul>
@@ -85,7 +120,28 @@
                     </form>-->
 
                     <div class="notify-icon">
-                        <span class="bi bi-bell" style="color: white"></span>
+                        
+                      <!--  <div class="dropdown text-end">-->
+                            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="bi bi-bell" style="color: white"></span>
+                                @if(auth()->user()->unreadNotifications->count())
+                                    <span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span>
+                                @endif
+                            </a>
+                              
+                  
+                            <ul class="dropdown-menu text-small">
+                                <li style="background-color: gray"><a class="dropdown-item" href="{{ route('readnotification') }}" style="color: black">Marcar como lido <i class="bi bi-check2-all"></i> </a></li>
+                              
+                                <li><hr class="dropdown-divider"></li>
+                                @foreach (auth()->user()->unReadnotifications as $notification)
+                                <li style="background-color: red"><a class="dropdown-item" href="#">{{$notification->data['data']}}</a></li>
+                                    
+                                @endforeach  
+        
+    
+                            </ul>
+                        
                     </div>
 
 
@@ -98,11 +154,15 @@
                     <div class="user">
                         <div class="dropdown text-end">
                             <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                              <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                                <span class="bi bi-person-circle rounded-circle" style="color: white;font-size: 25px;"></span>
+ 
                             </a>
                             <ul class="dropdown-menu text-small">
-                              <li><a class="dropdown-item" href="#">Perfil</a></li>
-                              <li><a class="dropdown-item" href="#">Configurações</a></li>
+                                @if (auth()->user()->hasRole('admin') == 'admin')
+                                    <li><a class="dropdown-item" href="{{ route('configurations') }}">Configurações</a></li>
+                                @else
+                                    <li hidden><a class="dropdown-item" href="{{ route('configurations') }}">Configurações</a></li>
+                                @endif
                               <li><hr class="dropdown-divider"></li>
                               <li>
                                 <form method="POST" action="{{ route('logout') }}">
@@ -117,8 +177,6 @@
                                 
                             </li>
                             </ul>
-
-                            
                           </div>
 
 
